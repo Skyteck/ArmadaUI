@@ -31,7 +31,7 @@ namespace ArmadaUI
             p._UIManager = this;
             p.LoadContent("test");
             p._Position = pos;
-            p.PlaceButton("test", new Vector2(160, 160), p.TestClick);
+            p.PlaceButton("test", new Vector2(10, 10), p.TestClick);
             PanelList.Add(p);
         }
 
@@ -42,7 +42,10 @@ namespace ArmadaUI
 
         public void Update(GameTime gt)
         {
-
+            foreach(UIPanel p in PanelList)
+            {
+                p.Update(gt);
+            }
             //only handling clicks for now
             if (InputHelper.LeftButtonClicked)
             {

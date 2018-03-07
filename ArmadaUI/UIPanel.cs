@@ -22,14 +22,13 @@ namespace ArmadaUI
 
         public Vector2 _InitialPos = Vector2.Zero;
 
-        public bool _Showing = false;
+        public bool _Showing = true;
         private bool xTracked = false;
         private bool yTracked = false;
         bool leftTracked = false;
         bool topTracked = false;
         bool trackMove = false;
         public bool _Resizable = true;
-        public bool _Draw = true;
 
         public UIManager _UIManager;
 
@@ -111,19 +110,22 @@ namespace ArmadaUI
             UIButton b = new UIButton();
             b._Name = Name;
             b.SetFunction(pressEvent);
-            b._Position = pos;
+            b._Position = new Vector2(this._Position.X + pos.X, this._Position.Y + pos.Y);
             b._UIManager = this._UIManager;
             b.LoadContent("ButtonTex");
             ButtonList.Add(b);
 
         }
 
-        protected void Update(GameTime gt)
+        public void Update(GameTime gt)
         {
-            //foreach(UIButton b in ButtonList)
-            //{
-            //    b.Update(gt);
-            //}
+            if (!_Showing) return;
+
+
+            foreach (UIButton b in ButtonList)
+            {
+                b.Update(gt);
+            }
 
             if (!_Resizable) return;
 
@@ -259,9 +261,24 @@ namespace ArmadaUI
             return track;
         }
 
+        public void HidePanel()
+        {
+            _Showing = false;
+        }
+
+        public void ShowPanel()
+        {
+            _Showing = true;
+        }
+
+        public void ToggleShow()
+        {
+            _Showing = !_Showing;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (_Draw)
+            if (_Showing)
             {
                 Rectangle sr = new Rectangle((int)_Position.X, (int)_Position.Y, adJustedWidth, adjustedHeight);
                 spriteBatch.Draw(_Texture, sr, Color.White);
