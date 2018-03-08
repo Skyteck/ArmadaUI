@@ -109,6 +109,7 @@ namespace ArmadaUI
         {
             UIButton b = new UIButton(Name, new Vector2(this._Position.X + pos.X, this._Position.Y + pos.Y), new Vector2(70,30) , "Get to work!" ,_UIManager, pressEvent);
             b.LoadContent("ButtonTex");
+            b.SetIcon("buttonIcon");
             ButtonList.Add(b);
 
         }
