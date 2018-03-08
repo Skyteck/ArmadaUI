@@ -107,11 +107,7 @@ namespace ArmadaUI
 
         public void PlaceButton(string Name, Vector2 pos, Action pressEvent)
         {
-            UIButton b = new UIButton();
-            b._Name = Name;
-            b.SetFunction(pressEvent);
-            b._Position = new Vector2(this._Position.X + pos.X, this._Position.Y + pos.Y);
-            b._UIManager = this._UIManager;
+            UIButton b = new UIButton(Name, new Vector2(this._Position.X + pos.X, this._Position.Y + pos.Y), new Vector2(70,30) , "Get to work!" ,_UIManager, pressEvent);
             b.LoadContent("ButtonTex");
             ButtonList.Add(b);
 

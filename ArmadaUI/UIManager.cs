@@ -56,6 +56,11 @@ namespace ArmadaUI
             }
         }
 
+        internal SpriteFont GetFont(string v)
+        {
+            return _ContentManager.Load<SpriteFont>("Fonts/"+v);
+        }
+
         public void Draw(SpriteBatch sb)
         {
             foreach(UIPanel p in PanelList)
