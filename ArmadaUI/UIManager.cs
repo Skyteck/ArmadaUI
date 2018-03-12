@@ -27,11 +27,12 @@ namespace ArmadaUI
         public void CreatePanel(String name, Vector2 pos)
         {
             UIPanel p = new UIPanel();
-            p.Name = name;
+            p._Name = name;
             p._UIManager = this;
             p.LoadContent("test");
             p._Position = pos;
             p.PlaceButton("test", new Vector2(10, 10), p.TestClick);
+            //p.PlaceLabel(new Vector2(20, 20), "Testing!!!");
             PanelList.Add(p);
         }
 

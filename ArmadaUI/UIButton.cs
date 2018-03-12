@@ -8,26 +8,22 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ArmadaUI
 {
-    class UIButton
+    class UIButton : UIElement
     {
-        private SpriteFont font;
         internal Texture2D _BG;
         internal Texture2D _BGHover;
         internal Texture2D _BGClicked;
         internal Texture2D _ActiveTex;
         internal Texture2D iconTex;
-        public Vector2 _Position;
         private int Width;
         private int Height;
-        public UIManager _UIManager;
 
         bool Clicked = false;
         bool Hovered = false;
-        internal string _Name;
-        string _Label;
 
         Action eventToFire;
-        private Action pressEvent;
+
+        UILabel _Label;
 
         public UIButton(string name, Vector2 pos, Vector2 size, string label, UIManager uIManager, Action pressEvent)
         {
@@ -37,7 +33,7 @@ namespace ArmadaUI
             eventToFire = pressEvent;
             Width = (int)size.X;
             Height = (int)size.Y;
-            _Label = label;
+            _Label = new UILabel(new Vector2(this._Position.X + (this.Width/2), this._Position.Y + (this.Height / 2)), label, uIManager);
         }
 
         Rectangle _BoundingBox
@@ -53,8 +49,9 @@ namespace ArmadaUI
             _BG = _UIManager.GetTexture(texName);
             _BGClicked = _UIManager.GetTexture(texName + "Clicked");
             _BGHover = _UIManager.GetTexture(texName + "Hover");
-            font = _UIManager.GetFont("Fipps");
-            
+
+            _Label.LoadContent("Fipps");
+
             _ActiveTex = _BG;
         }
 
@@ -122,10 +119,10 @@ namespace ArmadaUI
 
             if(iconTex == null)
             {
-                Vector2 TextSize = font.MeasureString(_Label);
-                textPos.X -= (float)Math.Floor(TextSize.X / 2);
-                textPos.Y -= (float)Math.Floor(TextSize.Y / 2);
-                spriteBatch.DrawString(font, _Label, textPos, Color.White);
+                if(_Label != null)
+                {
+                    _Label.Draw(spriteBatch);
+                }
             }
             else
             {
@@ -136,7 +133,7 @@ namespace ArmadaUI
             if (Hovered)
             {
                 if (Clicked) return;
-                DrawRectangleOutline(spriteBatch, this._BoundingBox, _BGHover, Color.White);
+                DrawRectangleOutline(spriteBatch, this._BoundingBox, _BGHover, Color.White, 1);
             }
 
         }

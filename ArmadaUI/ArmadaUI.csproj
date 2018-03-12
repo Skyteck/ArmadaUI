@@ -49,6 +49,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIButton.cs" />
+    <Compile Include="UIElement.cs" />
+    <Compile Include="UIIcon.cs" />
+    <Compile Include="UILabel.cs" />
     <Compile Include="UIManager.cs" />
     <Compile Include="UIPanel.cs" />
   </ItemGroup>

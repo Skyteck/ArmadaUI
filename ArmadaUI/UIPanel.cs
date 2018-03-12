@@ -10,9 +10,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace ArmadaUI
 {
-    public class UIPanel
+    public class UIPanel : UIElement
     {
-        public string Name;
+
+        List<UIButton> ButtonList;
+        List<UILabel> LabelList;
 
         int minWidth = 50;
         protected int adJustedWidth = 200;
@@ -29,16 +31,14 @@ namespace ArmadaUI
         bool topTracked = false;
         bool trackMove = false;
         public bool _Resizable = true;
-
-        public UIManager _UIManager;
+        
 
         Texture2D edgeTex;
         Texture2D _Texture;
         protected Texture2D extraTex;
 
         protected SpriteFont count;
-
-        public Vector2 _Position;
+        
 
         public Vector2 _Center
         {
@@ -88,10 +88,10 @@ namespace ArmadaUI
             }
         }
 
-        List<UIButton> ButtonList;
         public UIPanel()
         {
             ButtonList = new List<UIButton>();
+            LabelList = new List<UILabel>();
         }
 
         public void LoadContent(string name)
@@ -103,6 +103,13 @@ namespace ArmadaUI
             {
                 b.LoadContent("ButtonTex");
             }
+        }
+
+        public void PlaceLabel(Vector2 pos, string text)
+        {
+            UILabel l = new UILabel(new Vector2(this._Position.X + pos.X, this._Position.Y + pos.Y), text, _UIManager);
+            l.LoadContent("Fipps");
+            LabelList.Add(l);
         }
 
         public void PlaceButton(string Name, Vector2 pos, Action pressEvent)
@@ -209,7 +216,7 @@ namespace ArmadaUI
         {
             if(this._BoundingBox.Contains(pos))
             {
-                Console.WriteLine("Click!" + " " + this.Name + " clicked.");
+                Console.WriteLine("Click!" + " " + this._Name + " clicked.");
                 foreach(UIButton b in ButtonList)
                 {
                     b.ProcessClick(pos);
@@ -291,6 +298,11 @@ namespace ArmadaUI
                 foreach(UIButton b in ButtonList)
                 {
                     b.Draw(spriteBatch);
+                }
+
+                foreach(UILabel l in LabelList)
+                {
+                    l.Draw(spriteBatch);
                 }
 
             }
