@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace ArmadaUI
 {
-    class UIButton : UIElement
+    public class UIButton : UIElement
     {
         internal Texture2D _BG;
         internal Texture2D _BGHover;

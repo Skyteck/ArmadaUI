@@ -24,21 +24,25 @@ namespace ArmadaUI
             _ContentManager = content;
         }
 
-        public void CreatePanel(String name, Vector2 pos)
+        public void CreatePanel(String name, Vector2 pos, Vector2 size, string texName)
         {
             UIPanel p = new UIPanel();
             p._Name = name;
             p._UIManager = this;
-            p.LoadContent("test");
+            p.LoadContent(texName);
             p._Position = pos;
-            p.PlaceButton("test", new Vector2(10, 10), p.TestClick);
-            //p.PlaceLabel(new Vector2(20, 20), "Testing!!!");
+            p.SetSize(size);
             PanelList.Add(p);
         }
 
         public Texture2D GetTexture(string texName)
         {
             return _ContentManager.Load<Texture2D>(@"Art/" + texName);
+        }
+
+        public UIPanel GetUIPanel(string name)
+        {
+            return PanelList.Find(x => x._Name == name);
         }
 
         public void Update(GameTime gt)

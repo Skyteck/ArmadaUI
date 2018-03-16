@@ -45,7 +45,7 @@ namespace ArmadaUI
             spriteBatch = new SpriteBatch(GraphicsDevice);
             _UIManager = new UIManager();
             _UIManager.LoadContent(Content);
-            _UIManager.CreatePanel("Test", new Vector2(150, 150));
+            _UIManager.CreatePanel("Test", new Vector2(150, 150), new Vector2(200,200), "Panel");
             // TODO: use this.Content to load your game content here
         }
 

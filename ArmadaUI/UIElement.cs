@@ -14,6 +14,7 @@ namespace ArmadaUI
         public Vector2 _Position;
         public UIManager _UIManager;
         public string HoverText;
+        public bool _Show = true;
 
         public virtual void LoadContent(string texName)
         {

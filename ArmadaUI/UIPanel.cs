@@ -23,7 +23,7 @@ namespace ArmadaUI
         protected int scrollPos = 0;
 
         public Vector2 _InitialPos = Vector2.Zero;
-
+        public Vector2 Size;
         public bool _Showing = true;
         private bool xTracked = false;
         private bool yTracked = false;
@@ -94,15 +94,12 @@ namespace ArmadaUI
             LabelList = new List<UILabel>();
         }
 
-        public void LoadContent(string name)
+        public override void LoadContent(string name)
         {
-            _Texture = _UIManager.GetTexture("PanelBG");
+            _Texture = _UIManager.GetTexture(name + "BG");
             edgeTex = _UIManager.GetTexture("edgeTex");
-
-            foreach(UIButton b in ButtonList)
-            {
-                b.LoadContent("ButtonTex");
-            }
+            adjustedHeight = _Texture.Height;
+            adJustedWidth = _Texture.Width;
         }
 
         public void PlaceLabel(Vector2 pos, string text)
@@ -112,13 +109,18 @@ namespace ArmadaUI
             LabelList.Add(l);
         }
 
-        public void PlaceButton(string Name, Vector2 pos, Action pressEvent)
+        public void PlaceButton(string Name, Vector2 pos, Vector2 size, string label, Action pressEvent)
         {
-            UIButton b = new UIButton(Name, new Vector2(this._Position.X + pos.X, this._Position.Y + pos.Y), new Vector2(70,30) , "Get to work!" ,_UIManager, pressEvent);
+            UIButton b = new UIButton(Name, new Vector2(this._Position.X + pos.X, this._Position.Y + pos.Y), size , label, _UIManager, pressEvent);
             b.LoadContent("ButtonTex");
             b.SetIcon("buttonIcon");
             ButtonList.Add(b);
 
+        }
+
+        public UIButton GetButton(string name)
+        {
+            return ButtonList.Find(x => x._Name == name);
         }
 
         public void Update(GameTime gt)
@@ -205,7 +207,11 @@ namespace ArmadaUI
             }
         }
 
-
+        public void SetSize(Vector2 size)
+        {
+            adJustedWidth = (int)size.X;
+            adjustedHeight = (int)size.Y;
+        }
         public void Resize(Vector2 difference)
         {
             Console.WriteLine(this._Texture.Width);
@@ -216,7 +222,6 @@ namespace ArmadaUI
         {
             if(this._BoundingBox.Contains(pos))
             {
-                Console.WriteLine("Click!" + " " + this._Name + " clicked.");
                 foreach(UIButton b in ButtonList)
                 {
                     b.ProcessClick(pos);
@@ -280,7 +285,7 @@ namespace ArmadaUI
             _Showing = !_Showing;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             if (_Showing)
             {
@@ -297,12 +302,12 @@ namespace ArmadaUI
 
                 foreach(UIButton b in ButtonList)
                 {
-                    b.Draw(spriteBatch);
+                    if(b._Show) b.Draw(spriteBatch);
                 }
 
                 foreach(UILabel l in LabelList)
                 {
-                    l.Draw(spriteBatch);
+                    if(l._Show) l.Draw(spriteBatch);
                 }
 
             }

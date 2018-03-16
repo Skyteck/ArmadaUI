@@ -21,7 +21,7 @@ namespace ArmadaUI
             _UIManager = uim;
         }
 
-        public void LoadContent(string fontName)
+        public override void LoadContent(string fontName)
         {
             font = _UIManager.GetFont(fontName);
 
